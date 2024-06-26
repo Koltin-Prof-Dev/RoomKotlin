@@ -6,5 +6,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun AddView(navController: NavController){
-    Text(text = "Hola")
+    Text(text = "Hola addView")
 }
