@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
+import mx.edu.dsi_code.admintiempo.navigation.NavManager
 import mx.edu.dsi_code.admintiempo.ui.theme.AdminTiempoTheme
 
 @AndroidEntryPoint   /*androidentrypoint se utiliza para especificar que  se gtrabaja con hilt y un origen de datos bd*/
@@ -24,25 +25,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    NavManager()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AdminTiempoTheme {
-        Greeting("Android")
-    }
-}
+
