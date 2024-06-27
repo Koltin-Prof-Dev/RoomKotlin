@@ -30,3 +30,17 @@ fun MainTextField(value:String, onValueChange: (String) -> Unit, label:String){
 
 
 }
+@Composable
+/*Nota de diseño: cuando tienes un composable que retorna un valor siempre debera llamarse la funcion
+* en minuscula para evitar tener problemas con androidstudio
+* */
+fun formatTiempo(tiempo: Long):String
+{
+    /*formateamos la consulta del tiempo*/
+    val segundos = (tiempo / 1000)% 60
+    val minutos = (tiempo/ 1000 /60)%60
+    val horas= tiempo/ 1000 /3600
+    /*con este formateo obtenemos horas, minutos , segundos*/
+    return String.format("%02d:%02d:%02d",horas,minutos,segundos)
+
+}
