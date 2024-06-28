@@ -1,7 +1,9 @@
 package mx.edu.dsi_code.admintiempo.view
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import mx.edu.dsi_code.admintiempo.components.FloatButton
 import mx.edu.dsi_code.admintiempo.components.MainTitle
@@ -52,4 +55,11 @@ fun ContentHomeView(it: PaddingValues, navController: NavController,cronosVM: Cr
             }
         }
     }
+}
+
+@Composable
+fun CronCard(titulo:String, crono:String, onClick:() -> Unit){
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 10.dp))
 }
