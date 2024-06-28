@@ -1,11 +1,18 @@
 package mx.edu.dsi_code.admintiempo.view
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,10 +24,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import mx.edu.dsi_code.admintiempo.R
+import mx.edu.dsi_code.admintiempo.components.CircleButton
 import mx.edu.dsi_code.admintiempo.components.MainIconButton
 import mx.edu.dsi_code.admintiempo.components.MainTitle
 import mx.edu.dsi_code.admintiempo.components.formatTiempo
@@ -66,6 +76,25 @@ fun ContentAddView(
            fontWeight = FontWeight.Bold)
         Button(onClick = { cronometroVM.iniciar() }) {
             Text(text = "Iniciar")
+        }
+
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(vertical=16.dp)) {
+             //inicia el proceso
+             CircleButton(icon = painterResource(id = R.drawable.play),enabled = !state.cronometroActivo) {
+                 cronometroVM.iniciar()
+             }
+            //pausa el proceso del tiempo
+            CircleButton(icon = painterResource(id = R.drawable.pause),enabled = state.cronometroActivo) {
+                cronometroVM.pausar()
+            }
+            //detiene el proceso del tiempo
+            CircleButton(icon = painterResource(id = R.drawable.stop),enabled = !state.cronometroActivo) {
+                cronometroVM.detener()
+            }
+            //mostrar guardar tiempo
+            CircleButton(icon = painterResource(id = R.drawable.save),enabled = state.showSaveButton) {
+                cronometroVM.showTextField()
+            }
         }
 
     }
