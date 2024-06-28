@@ -32,13 +32,16 @@ import androidx.navigation.NavController
 import mx.edu.dsi_code.admintiempo.R
 import mx.edu.dsi_code.admintiempo.components.CircleButton
 import mx.edu.dsi_code.admintiempo.components.MainIconButton
+import mx.edu.dsi_code.admintiempo.components.MainTextField
 import mx.edu.dsi_code.admintiempo.components.MainTitle
 import mx.edu.dsi_code.admintiempo.components.formatTiempo
+import mx.edu.dsi_code.admintiempo.model.Cronos
 import mx.edu.dsi_code.admintiempo.viewModels.CronometroViewModel
+import mx.edu.dsi_code.admintiempo.viewModels.CronosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddView(navController: NavController, cronometroVM: CronometroViewModel){
+fun AddView(navController: NavController, cronometroVM: CronometroViewModel,cronosVM:CronosViewModel){
     Scaffold(topBar = { CenterAlignedTopAppBar(title = { MainTitle(title = "ADD App Crono") },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
@@ -46,7 +49,7 @@ fun AddView(navController: NavController, cronometroVM: CronometroViewModel){
             navController.popBackStack()
         }}
     ) }){
-        ContentAddView(it,navController,cronometroVM)
+        ContentAddView(it,navController,cronometroVM,cronosVM)
     }
 }
 
@@ -54,7 +57,8 @@ fun AddView(navController: NavController, cronometroVM: CronometroViewModel){
 fun ContentAddView(
     it: PaddingValues,
     navController: NavController,
-    cronometroVM: CronometroViewModel
+    cronometroVM: CronometroViewModel,
+    cronosVM: CronosViewModel
 ){
     /*traemos el valor de la variable state desde el viewModel
     * el viewModel se pasa del componente principal como parametro
@@ -95,6 +99,24 @@ fun ContentAddView(
             CircleButton(icon = painterResource(id = R.drawable.save),enabled = state.showSaveButton) {
                 cronometroVM.showTextField()
             }
+        }
+        if(state.showTextField){
+            MainTextField(value = state.title, onValueChange = {cronometroVM.onValue(it)}, label = "Title")
+            /*Se guarda en base de datos a traves de room*/
+            Button(onClick = { cronosVM.addCrono(
+                Cronos(
+                    title = state.title,
+                    crono = cronometroVM.tiempo
+                )
+            )
+                /*detenemos el cronometro*/
+                cronometroVM.detener()
+                /*regresamos al homeView*/
+                navController.popBackStack()
+            }) {
+                Text(text = "Guardar")
+            }
+            
         }
 
     }

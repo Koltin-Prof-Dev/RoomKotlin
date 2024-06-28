@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import mx.edu.dsi_code.admintiempo.navigation.NavManager
 import mx.edu.dsi_code.admintiempo.ui.theme.AdminTiempoTheme
 import mx.edu.dsi_code.admintiempo.viewModels.CronometroViewModel
+import mx.edu.dsi_code.admintiempo.viewModels.CronosViewModel
 
 @AndroidEntryPoint   /*androidentrypoint se utiliza para especificar que  se gtrabaja con hilt y un origen de datos bd*/
 class MainActivity : ComponentActivity() {
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val cronometroVM: CronometroViewModel by viewModels()
-
+        val cronosVM : CronosViewModel by viewModels()
         setContent {
             AdminTiempoTheme {
                 // A surface container using the 'background' color from the theme
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavManager(cronometroVM)
+                    NavManager(cronometroVM,cronosVM)
                 }
             }
         }

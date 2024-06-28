@@ -8,9 +8,10 @@ import mx.edu.dsi_code.admintiempo.view.AddView
 import mx.edu.dsi_code.admintiempo.view.EditView
 import mx.edu.dsi_code.admintiempo.view.HomeView
 import mx.edu.dsi_code.admintiempo.viewModels.CronometroViewModel
+import mx.edu.dsi_code.admintiempo.viewModels.CronosViewModel
 
 @Composable
-fun NavManager(cronometroVM: CronometroViewModel ){
+fun NavManager(cronometroVM: CronometroViewModel ,cronosVM: CronosViewModel){
     /*creamos la instancia del contrladr de navegacion*/
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "Home"){
@@ -18,7 +19,7 @@ fun NavManager(cronometroVM: CronometroViewModel ){
             HomeView(navController)
         }
         composable("AddView"){
-            AddView(navController,cronometroVM)
+            AddView(navController,cronometroVM,cronosVM)
         }
         composable("EditView"){
             EditView(navController)
