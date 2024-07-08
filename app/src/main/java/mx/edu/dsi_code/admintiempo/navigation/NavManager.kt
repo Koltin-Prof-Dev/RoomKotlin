@@ -22,7 +22,7 @@ fun NavManager(cronometroVM: CronometroViewModel ,cronosVM: CronosViewModel){
             AddView(navController,cronometroVM,cronosVM)
         }
         composable("EditView"){
-            EditView(navController)
+            EditView(navController, cronometroVM, cronosVM)
         }
     }
 }

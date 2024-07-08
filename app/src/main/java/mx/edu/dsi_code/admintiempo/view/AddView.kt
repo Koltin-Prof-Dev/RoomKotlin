@@ -78,9 +78,10 @@ fun ContentAddView(
        Text(text = formatTiempo(tiempo = cronometroVM.tiempo),
            fontSize = 50.sp,
            fontWeight = FontWeight.Bold)
-        Button(onClick = { cronometroVM.iniciar() }) {
+
+        /*Button(onClick = { cronometroVM.iniciar() }) {
             Text(text = "Iniciar")
-        }
+        }*/
 
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(vertical=16.dp)) {
              //inicia el proceso
@@ -100,7 +101,7 @@ fun ContentAddView(
                 cronometroVM.showTextField()
             }
         }
-        if(state.showTextField){
+        if( state.showTextField ){
             MainTextField(value = state.title, onValueChange = {cronometroVM.onValue(it)}, label = "Title")
             /*Se guarda en base de datos a traves de room*/
             Button(onClick = { cronosVM.addCrono(
