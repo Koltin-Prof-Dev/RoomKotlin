@@ -29,7 +29,7 @@ class CronometroViewModel @Inject constructor(private val repository: CronosRepo
         private set
 
 
-    fun getTImeById(id:Long){
+    fun getFirstTImeById(id:Long){
         viewModelScope.launch(Dispatchers.IO) {
             /*consulto por identificador*/
             repository.getCronoById(id).collect(){
@@ -41,14 +41,14 @@ class CronometroViewModel @Inject constructor(private val repository: CronosRepo
 
 
 
-    fun getCronoById(id:Long){
+    fun getTImeById(id:Long){
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCronoById(id).collect { item ->
                 if(item != null){
                     tiempo = item.crono
                     state = state.copy(title = item.title)
                 }else{
-                    Log.d("Error", "El objeto crono es nulo")
+                    Log.d("Error", "El objeto tiempo es nulo")
                 }
             }
         }
