@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +37,7 @@ import mx.edu.dsi_code.admintiempo.viewModels.CronosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditView(navController: NavController, cronometroVM: CronometroViewModel, cronosVM: CronosViewModel){
+fun EditView(navController: NavController, cronometroVM: CronometroViewModel, cronosVM: CronosViewModel,id:Long){
     Scaffold(topBar = { CenterAlignedTopAppBar(title = { MainTitle(title = "Edit App Crono") },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
@@ -45,7 +46,7 @@ fun EditView(navController: NavController, cronometroVM: CronometroViewModel, cr
         }
         }
     ) }){
-        ContentEditView(it,navController,cronometroVM,cronosVM)
+        ContentEditView(it,navController,cronometroVM,cronosVM,id)
     }
 }
 
@@ -54,7 +55,7 @@ fun ContentEditView(
     it: PaddingValues,
     navController: NavController,
     cronometroVM: CronometroViewModel,
-    cronosVM: CronosViewModel
+    cronosVM: CronosViewModel,id:Long
 ){
     /*traemos el valor de la variable state desde el viewModel
     * el viewModel se pasa del componente principal como parametro
@@ -63,6 +64,12 @@ fun ContentEditView(
     LaunchedEffect(state.cronometroActivo){
         cronometroVM.cronos()
     }
+
+    LaunchedEffect(Unit){
+        /*comnsultamos el metodo de busqueda por identificador*/
+        cronometroVM.getTImeById(id)
+    }
+
     Column(
         modifier = Modifier
             .padding(it)
@@ -75,9 +82,7 @@ fun ContentEditView(
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold)
 
-        /*Button(onClick = { cronometroVM.iniciar() }) {
-            Text(text = "Iniciar")
-        }*/
+       
 
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(vertical=16.dp)) {
             //inicia el proceso
@@ -100,21 +105,24 @@ fun ContentEditView(
         if( state.showTextField ){
             MainTextField(value = state.title, onValueChange = {cronometroVM.onValue(it)}, label = "Title")
             /*Se guarda en base de datos a traves de room*/
-            Button(onClick = { cronosVM.addCrono(
+            Button(onClick = { cronosVM.updateCrono(
                 Cronos(
                     title = state.title,
                     crono = cronometroVM.tiempo
                 )
             )
-                /*detenemos el cronometro*/
-                cronometroVM.detener()
+
                 /*regresamos al homeView*/
                 navController.popBackStack()
             }) {
                 Text(text = "Guardar")
             }
-
+            DisposableEffect(Unit){
+                onDispose {
+                    /*detenemos el cronometro*/
+                    cronometroVM.detener()
+                }
+            }
         }
-
     }
 }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import mx.edu.dsi_code.admintiempo.state.CronoState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import mx.edu.dsi_code.admintiempo.repository.CronosRepository
 import javax.inject.Inject
@@ -26,6 +27,19 @@ class CronometroViewModel @Inject constructor(private val repository: CronosRepo
 
     var tiempo by mutableStateOf(0L)
         private set
+
+
+    fun getTImeById(id:Long){
+        viewModelScope.launch(Dispatchers.IO) {
+            /*consulto por identificador*/
+            repository.getCronoById(id).collect(){
+                item ->tiempo = item.crono
+                state = state.copy(title = item.title)
+            }
+        }
+    }
+
+
 
     fun getCronoById(id:Long){
         viewModelScope.launch(Dispatchers.IO) {
